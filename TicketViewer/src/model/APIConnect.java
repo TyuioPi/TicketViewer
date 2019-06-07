@@ -5,15 +5,57 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Base64;
 
 public class APIConnect {
 	
 	private static String FILE_NAME = "auth.txt";
+	private static String URL_PATH = "https://tyuiop.zendesk.com/api/v2/tickets.json";
 	
-	public APIConnect() {
+	public APIConnect() {}
+	
+	public void HttpRequestJSON() {
 		
+		String authorization = getAuthorization();
+		String encoding = Base64.getEncoder().encodeToString((authorization).getBytes());
+		HttpURLConnection connection;
+		
+		try {
+			URL url = new URL(URL_PATH);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setDoOutput(true);
+			connection.setRequestProperty("Authorization", "Basic " + encoding);
+			connection.setRequestProperty("Accept", "application/json");
+			
+			int statusCode = connection.getResponseCode();
+			if (statusCode != HttpURLConnection.HTTP_OK) {
+				System.out.println("Response Code: " + statusCode);
+			} else {
+				InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				
+				String line;
+				StringBuffer response = new StringBuffer();
+				while ((line = bufferedReader.readLine()) != null) {
+					response.append(line);
+		      	}
+				inputStreamReader.close();
+				bufferedReader.close();
+				System.out.println(response);
+			}
+		} catch (MalformedURLException e) {
+			System.out.println("MalformedURL provided: " + URL_PATH);
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	private String getAuthorization() {
@@ -45,7 +87,7 @@ public class APIConnect {
 			
 			// Handle any FileNotFoundException
 		} catch (FileNotFoundException e) {
-			System.out.println(FILE_NAME + "could not be found");
+			System.out.println(FILE_NAME + " could not be found");
 			e.printStackTrace();
 			// Handle any IOExceptions
 		} catch (IOException e) {
