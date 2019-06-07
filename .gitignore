@@ -1,0 +1,4 @@
+/.metadata/
+
+# Ignore auth.txt
+auth.txt
