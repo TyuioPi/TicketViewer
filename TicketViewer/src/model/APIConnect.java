@@ -12,24 +12,26 @@ import java.net.URL;
 import java.util.Base64;
 
 public class APIConnect {
-	
+
 	private static String FILE_NAME = "auth.txt";
-	private static String URL_PATH = "https://tyuiop.zendesk.com/api/v2/tickets.json";
+//	private static String URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/tickets.json?query=1";
+//	private static String URL_LIST = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
 	
 	public APIConnect() {}
 	
-	public void HttpRequestJSON() {
+	public void HttpRequestJSON(String apiUrl) {
 		
 		String authorization = getAuthorization();
 		String encoding = Base64.getEncoder().encodeToString((authorization).getBytes());
 		HttpURLConnection connection;
 		
 		try {
-			URL url = new URL(URL_PATH);
+			URL url = new URL(apiUrl);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
 			connection.setRequestProperty("Authorization", "Basic " + encoding);
+			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setRequestProperty("Accept", "application/json");
 			
 			int statusCode = connection.getResponseCode();
@@ -49,7 +51,7 @@ public class APIConnect {
 				System.out.println(response);
 			}
 		} catch (MalformedURLException e) {
-			System.out.println("MalformedURL provided: " + URL_PATH);
+			System.out.println("MalformedURL provided: " + apiUrl);
 			e.printStackTrace();
 		} catch (ProtocolException e) {
 			e.printStackTrace();
