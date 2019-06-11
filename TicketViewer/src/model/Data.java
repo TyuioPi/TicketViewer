@@ -22,6 +22,11 @@ public class Data {
 	 * via information from API query for a single ticket 
 	 */
 	public void parseDataByIdQuery(StringBuffer response) {
+		// Clear ticket list
+		if (!ticketList.isEmpty()) {
+			ticketList.removeAll(ticketList);
+		}
+		
 		JSONObject = new JSONObject(response.toString());
 		String next_page = JSONObject.get("next_page").toString();
 		
@@ -44,6 +49,11 @@ public class Data {
 	 * via information from API request for multiple tickets
 	 */
 	public void parseByPage(StringBuffer response) {
+		// Clear ticket list
+		if (!ticketList.isEmpty()) {
+			ticketList.removeAll(ticketList);
+		}
+		
 		JSONObject = new JSONObject(response.toString());
 		String next_page = JSONObject.get("next_page").toString();
 		

@@ -53,6 +53,7 @@ public class Menu {
 					if ("return".equals(userInput)) {
 						viewingSingleTicket = false;
 						
+						
 					// Retrieve data from API and display it
 					} else if (validateEnteredTicketId(userInput)) {
 						
@@ -73,16 +74,17 @@ public class Menu {
 			case "2":
 				boolean viewingTicketList = true;
 				String nextPageURL = null;
+				boolean viewNextPage = false;
 				
 				do {
 					StringBuffer response;
 					
 					// Generate URL for ticket list and get response from URL
-					if (nextPageURL == null) {
+					if (nextPageURL != null && viewNextPage) {
+						response = apiConnect.HttpRequestJSON(nextPageURL);
+					} else {
 						String url = apiConnect.generateURLQueryByList();
 						response = apiConnect.HttpRequestJSON(url);
-					} else {
-						response = apiConnect.HttpRequestJSON(nextPageURL);
 					}
 					
 					// Parse response from URL
@@ -91,7 +93,7 @@ public class Menu {
 					// Display ticket
 					displayTicketInfo();
 					nextPageURL = getNextPageURL();
-					boolean viewNextPage = false;
+					viewNextPage = false;
 					
 					while (viewNextPage == false && viewingTicketList) {
 						userInput = scanner.nextLine();
@@ -163,7 +165,7 @@ public class Menu {
 		String nextPageURL = null;
 		boolean hasNextPage = false;
 		if (!ticketList.isEmpty()) {
-			if (ticketList.get(ticketList.size() - 1).getNextPage() != null) {
+			if (!ticketList.get(ticketList.size() - 1).getNextPage().equals("null")) {
 				hasNextPage = true;
 				nextPageURL = ticketList.get(ticketList.size() - 1).getNextPage();
 			}
