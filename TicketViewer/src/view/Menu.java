@@ -11,7 +11,6 @@ import model.Ticket;
 /*The Menu class is designed to handle the UI for users using the
  * Ticket Viewer application
  */
-
 public class Menu {
 	
 	// Initialize variables to handling menu functionality
@@ -76,13 +75,16 @@ public class Menu {
 				// Get next page URL from JSON
 				break;
 			case "help":
+				// Display help options
 				displayOptions();
 				break;
 			case "quit":
+				// Exit Ticket Viewer program
 				running = false;
-				System.out.println("Exiting Ticket Viewer");
+				System.out.println("Thank you for using Ticket Viewer");
 				break;
 			default:
+				// Notify user of invalid option selected
 				System.out.println("Invalid Option Selected");
 				break;
 			}

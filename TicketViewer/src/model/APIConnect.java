@@ -9,6 +9,10 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Base64;
 
+/* The APIConnect class is designed to handle connecting to the API
+ * by generating the appropriate URL to retrieve information
+ * in JSON format
+ */
 public class APIConnect {
 
 //	private static String URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/search.json?query=1";

@@ -1,5 +1,6 @@
 package model;
 
+// The Ticket class is designed to model ticket objects
 public class Ticket {
 
 	// Initialize variables of a ticket

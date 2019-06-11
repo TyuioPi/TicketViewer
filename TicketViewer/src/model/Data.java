@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+/* The Data class is designed to parse JSON information from
+ * the API request to generate a list of tickets
+ */
 public class Data {
 	
 	// Initialize variables for parsing JSON and list creation
@@ -14,8 +17,8 @@ public class Data {
 		this.ticketList = ticketList;
 	}
 	
-	/* Parse JSON Object and create ticket object 
-	 * via information from query for a single ticket 
+	/* Parse JSON Object and create ticket objects 
+	 * via information from API query for a single ticket 
 	 */
 	public void parseDataByIdQuery(StringBuffer response) {
 		JSONObject = new JSONObject(response.toString());
@@ -36,6 +39,9 @@ public class Data {
 		// HANDLE EMPTY JSON
 	}
 	
+	/* Parse JSON Object and create ticket objects 
+	 * via information from API request for multiple tickets
+	 */
 	private void parseByPage() {
 		
 	}
