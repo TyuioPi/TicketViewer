@@ -70,8 +70,14 @@ public class APIConnect {
 		return url;
 	}
 	
-	public String generateURLQueryByList(String page) {
-		String url = "https://tyuiop.zendesk.com/api/v2/tickets.json?" + "per_page=25";
+	public String generateURLQueryByList() {
+		String url = null;
+//		if (page == 0) {
+			url = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
+//		}
+//			else {
+//			url = "https://tyuiop.zendesk.com/api/v2/tickets.json?" + "per_page=25";
+//		}
 		return url;
 	}
 }

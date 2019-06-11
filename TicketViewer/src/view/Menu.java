@@ -16,7 +16,6 @@ public class Menu {
 	// Initialize variables to handling menu functionality
 	private Scanner scanner = new Scanner(System.in);
 	private boolean running = true;
-	private boolean viewingTicketList = true;
 	private APIConnect apiConnect;
 	private Data data;
 	private List<Ticket> ticketList;
@@ -73,6 +72,22 @@ public class Menu {
 				break;
 			case "2":
 				// Get next page URL from JSON
+				boolean viewingTicketList = true;
+				int page = 0;
+				
+				while (viewingTicketList) {
+					// Generate URL for ticket list
+					String url = apiConnect.generateURLQueryByList();
+					
+					// Get response from URL
+					StringBuffer response = apiConnect.HttpRequestJSON(url);
+					
+					// Parse response from URL
+					data.parseByPage(response);
+					
+					// Display ticket
+					displayTicketInfo();
+				}
 				break;
 			case "help":
 				// Display help options
@@ -119,7 +134,7 @@ public class Menu {
 			Ticket ticket = iterator.next();
 			System.out.println(ticket.getId());
 			System.out.println(ticket.getRequesterId());
-			System.out.println(ticket.getStatus());
+			System.out.println(ticket.getSubject());
 			System.out.println(ticket.getCreatedAt());
 			System.out.println(ticket.getPriority());
 			System.out.println(ticket.getStatus());

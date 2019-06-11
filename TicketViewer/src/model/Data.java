@@ -42,7 +42,7 @@ public class Data {
 	/* Parse JSON Object and create ticket objects 
 	 * via information from API request for multiple tickets
 	 */
-	private void parseByPage() {
+	public void parseByPage(StringBuffer response) {
 		
 	}
 }
