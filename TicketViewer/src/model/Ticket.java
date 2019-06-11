@@ -2,6 +2,7 @@ package model;
 
 public class Ticket {
 
+	// Initialize variables of a ticket
 	private String id;
 	private String requesterId;
 	private String subject;
@@ -23,34 +24,42 @@ public class Ticket {
 		this.next_page = next_page;
 	}
 	
+	// Get ticket id
 	public String getId() {
 		return id;
 	}
 
+	// Get id of requester for a ticket
 	public String getRequesterId() {
 		return requesterId;
 	}
 	
+	// Get subject of a ticket
 	public String getSubject() {
 		return subject;
 	}
 	
+	// Get date ticket is created
 	public String getCreatedAt() {
 		return created_at;
 	}
 	
+	// Get priority of a ticket
 	public String getPriority() {
 		return priority;
 	}
 	
+	// Get the ticket status
 	public String getStatus() {
 		return status;
 	}
 	
+	// Get the type of ticket
 	public String getType() {
 		return type;
 	}
 	
+	// Get next page URL
 	public String getNextPage() {
 		return next_page;
 	}

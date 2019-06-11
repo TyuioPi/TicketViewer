@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 public class Data {
 	
+	// Initialize variables for parsing JSON and list creation
 	private JSONObject JSONObject;
 	private List<Ticket> ticketList;
 	
