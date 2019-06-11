@@ -1,9 +1,12 @@
 package view;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 import model.APIConnect;
 import model.Data;
+import model.Ticket;
 
 /*The Menu class is designed to handle the UI for users using the
  * Ticket Viewer application
@@ -14,12 +17,15 @@ public class Menu {
 	// Initialize variables to handling menu functionality
 	private Scanner scanner = new Scanner(System.in);
 	private boolean running = true;
+	private boolean viewingTicketList = true;
 	private APIConnect apiConnect;
 	private Data data;
+	private List<Ticket> ticketList;
 	
-	public Menu(APIConnect apiConnect, Data data) {
+	public Menu(APIConnect apiConnect, Data data, List<Ticket> ticketList) {
 		this.apiConnect = apiConnect;
 		this.data = data;
+		this.ticketList = ticketList;
 	}
 	
 	public void menu() {
@@ -36,16 +42,38 @@ public class Menu {
 			
 			switch (userInput) {
 			case "1":
-				System.out.println("Please enter a ticket ID");
-				userInput = scanner.nextLine();
-				if (validateEnteredTicketId(userInput)) {
-					String url = apiConnect.generateURLQueryById(userInput);
-					StringBuffer response = apiConnect.HttpRequestJSON(url);
-					data.setJSONObject(response);
+				boolean viewingSingleTicket = true;
+				
+				// View single tickets until user returns to menu
+				while (viewingSingleTicket) {
+					System.out.println("Please enter a ticket ID: \n" + 
+									   "(Type 'return' to go back to menu)");
+					
+					userInput = scanner.nextLine();
+					
+					// Retrieve data from API and display it
+					if (validateEnteredTicketId(userInput)) {
+						
+						// Generate URL for id query
+						String url = apiConnect.generateURLQueryById(userInput);
+						
+						// Get response from URL
+						StringBuffer response = apiConnect.HttpRequestJSON(url);
+						
+						// Parse response from URL
+						data.parseDataByIdQuery(response);
+						
+						// Display ticket
+						displayTicketInfo();
+						
+					// Return to menu
+					} else if (userInput == "return") {
+						viewingSingleTicket = false;
+					}
 				}
 				break;
 			case "2":
-				// Get next page url from json
+				// Get next page URL from JSON
 				break;
 			case "help":
 				displayOptions();
@@ -80,5 +108,23 @@ public class Menu {
 			return false;
 		}
 		return true;
+	}
+	
+	private void displayTicketInfo() {
+		Iterator<Ticket> iterator = ticketList.iterator();
+		
+		while(iterator.hasNext()) {
+			Ticket ticket = iterator.next();
+			System.out.println(ticket.getId());
+			System.out.println(ticket.getRequesterId());
+			System.out.println(ticket.getStatus());
+			System.out.println(ticket.getCreatedAt());
+			System.out.println(ticket.getPriority());
+			System.out.println(ticket.getStatus());
+			System.out.println(ticket.getType());
+			System.out.println();
+		}
+
+//			System.out.println(ticket.getNextPage());
 	}
 }

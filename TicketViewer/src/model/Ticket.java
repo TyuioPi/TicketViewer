@@ -1,15 +1,20 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Ticket {
 
-	private String id, subject, created_at, priority, status, type, next_page;
-	private ArrayList<Ticket> ticketList = new ArrayList<Ticket>();
+	private String id;
+	private String requesterId;
+	private String subject;
+	private String created_at;
+	private String priority;
+	private String status;
+	private String type;
+	private String next_page;
 	
-	public Ticket(String id, String subject, String created_at, String priority,
-			String status, String type, String next_page) {
+	public Ticket(String id, String requesterId, String subject, String created_at, 
+			String priority, String status, String type, String next_page) {
 		this.id = id;
+		this.requesterId = requesterId;
 		this.subject = subject;
 		this.created_at = created_at;
 		this.priority = priority;
@@ -18,11 +23,35 @@ public class Ticket {
 		this.next_page = next_page;
 	}
 	
-	public void addTicket(Ticket ticket) {
-		ticketList.add(ticket);
+	public String getId() {
+		return id;
+	}
+
+	public String getRequesterId() {
+		return requesterId;
 	}
 	
-	public ArrayList<Ticket> getTicketList() {
-		return ticketList;
+	public String getSubject() {
+		return subject;
+	}
+	
+	public String getCreatedAt() {
+		return created_at;
+	}
+	
+	public String getPriority() {
+		return priority;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	
+	public String getNextPage() {
+		return next_page;
 	}
 }
