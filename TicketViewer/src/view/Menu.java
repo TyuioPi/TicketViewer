@@ -49,8 +49,12 @@ public class Menu {
 					
 					userInput = scanner.nextLine();
 					
+					// Return to menu
+					if ("return".equals(userInput)) {
+						viewingSingleTicket = false;
+						
 					// Retrieve data from API and display it
-					if (validateEnteredTicketId(userInput)) {
+					} else if (validateEnteredTicketId(userInput)) {
 						
 						// Generate URL for id query
 						String url = apiConnect.generateURLQueryById(userInput);
@@ -63,31 +67,44 @@ public class Menu {
 						
 						// Display ticket
 						displayTicketInfo();
-						
-					// Return to menu
-					} else if (userInput == "return") {
-						viewingSingleTicket = false;
 					}
 				}
 				break;
 			case "2":
-				// Get next page URL from JSON
 				boolean viewingTicketList = true;
-				int page = 0;
+				String nextPageURL = null;
 				
-				while (viewingTicketList) {
-					// Generate URL for ticket list
-					String url = apiConnect.generateURLQueryByList();
+				do {
+					StringBuffer response;
 					
-					// Get response from URL
-					StringBuffer response = apiConnect.HttpRequestJSON(url);
+					// Generate URL for ticket list and get response from URL
+					if (nextPageURL == null) {
+						String url = apiConnect.generateURLQueryByList();
+						response = apiConnect.HttpRequestJSON(url);
+					} else {
+						response = apiConnect.HttpRequestJSON(nextPageURL);
+					}
 					
 					// Parse response from URL
 					data.parseByPage(response);
 					
 					// Display ticket
 					displayTicketInfo();
-				}
+					nextPageURL = getNextPageURL();
+					boolean viewNextPage = false;
+					
+					while (viewNextPage == false && viewingTicketList) {
+						userInput = scanner.nextLine();
+						if (userInput.equals("return")){
+							viewingTicketList = false;
+						} else if (userInput.equals("next")) {
+							viewNextPage = true;
+						} else {
+							System.out.println("Invalid Option Selected");
+						}
+					} 
+					
+				} while (viewingTicketList);
 				break;
 			case "help":
 				// Display help options
@@ -138,10 +155,25 @@ public class Menu {
 			System.out.println(ticket.getCreatedAt());
 			System.out.println(ticket.getPriority());
 			System.out.println(ticket.getStatus());
-			System.out.println(ticket.getType());
-			System.out.println();
+			System.out.println(ticket.getType() + "\n");
 		}
-
-//			System.out.println(ticket.getNextPage());
+	}
+	
+	private String getNextPageURL() {
+		String nextPageURL = null;
+		boolean hasNextPage = false;
+		if (!ticketList.isEmpty()) {
+			if (ticketList.get(ticketList.size() - 1).getNextPage() != null) {
+				hasNextPage = true;
+				nextPageURL = ticketList.get(ticketList.size() - 1).getNextPage();
+			}
+		}
+		
+		if (hasNextPage) {
+			System.out.println("Type 'next' to view next page or 'return'"
+					+ " to go back to menu\n");
+		}
+		
+		return nextPageURL;
 	}
 }

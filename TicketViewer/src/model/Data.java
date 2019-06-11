@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /* The Data class is designed to parse JSON information from
@@ -43,6 +44,24 @@ public class Data {
 	 * via information from API request for multiple tickets
 	 */
 	public void parseByPage(StringBuffer response) {
+		JSONObject = new JSONObject(response.toString());
+		String next_page = JSONObject.get("next_page").toString();
 		
+		JSONArray JSONArray = JSONObject.getJSONArray("tickets");
+		
+		for (int length = 0; length < JSONArray.length(); length++) {
+			String id = JSONArray.getJSONObject(length).get("id").toString();
+			String requesterId = JSONArray.getJSONObject(length).get("requester_id").toString();
+			String subject = JSONArray.getJSONObject(length).get("subject").toString();
+			String created_at = JSONArray.getJSONObject(length).get("created_at").toString();
+			String priority = JSONArray.getJSONObject(length).get("priority").toString();
+			String status = JSONArray.getJSONObject(length).get("status").toString();
+			String type = JSONArray.getJSONObject(length).get("type").toString();
+//			
+			ticketList.add(new Ticket(id, requesterId, subject, created_at, 
+					                  priority, status, type, next_page));
+//			System.out.println(JSONArray.getJSONObject(length).get("id").toString());
+		}
 	}
 }
+//.getJSONObject(0)

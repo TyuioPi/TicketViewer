@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.SocketException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Base64;
 
 /* The APIConnect class is designed to handle connecting to the API
@@ -54,6 +56,12 @@ public class APIConnect {
 				inputStreamReader.close();
 				bufferedReader.close();
 			}
+		} catch (SocketException e) {
+			System.out.println("Network could not be found");
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			System.out.println("Unable to connect to host");
+			e.printStackTrace();
 		} catch (MalformedURLException e) {
 			System.out.println("MalformedURL provided: " + apiUrl);
 			e.printStackTrace();
@@ -71,13 +79,7 @@ public class APIConnect {
 	}
 	
 	public String generateURLQueryByList() {
-		String url = null;
-//		if (page == 0) {
-			url = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
-//		}
-//			else {
-//			url = "https://tyuiop.zendesk.com/api/v2/tickets.json?" + "per_page=25";
-//		}
+		String url = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
 		return url;
 	}
 }
