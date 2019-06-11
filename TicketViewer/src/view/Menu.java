@@ -12,6 +12,7 @@ import model.Ticket;
  * Ticket Viewer application
  */
 public class Menu {
+	
 	// Initialize variables to handling menu functionality
 	private Scanner scanner = new Scanner(System.in);
 	private boolean running = true;
@@ -73,24 +74,25 @@ public class Menu {
 				}
 				break;
 			case "2":
+				// Initialize local variables
 				boolean viewingTicketList = true;
 				boolean viewNextPage = false;
 				boolean viewPreviousPage = false;
 				String nextPageURL = null;
 				String previousPageURL = null;
-				int i = 0;
+				int initialize = 0;
 				
 				do {
 					StringBuffer response = null;
 					
-					if (i == 0) {
-	
+					// Generate initial URL for displaying ticket list and get response from URL
+					if (initialize == 0) {
 							String url = apiConnect.generateURLQueryByList();
 							response = apiConnect.HttpRequestJSON(url);
-							i++;
+							initialize++;
 						
 					}
-					// Generate URL for ticket list and get response from URL
+					// Generate pagination URL for ticket list and get response from URL
 					if (nextPageURL != null && viewNextPage) {
 						response = apiConnect.HttpRequestJSON(nextPageURL);
 					} else if (previousPageURL != null && viewPreviousPage) {
@@ -116,8 +118,10 @@ public class Menu {
 					viewNextPage = false;
 					viewPreviousPage = false;
 					
+					// Display pagination message
 					paginationMessage();
 					
+					// Handle ticket list options
 					while (viewNextPage == false && viewPreviousPage == false && viewingTicketList) {
 						userInput = scanner.nextLine();
 						if (userInput.equals("return")) {
@@ -131,7 +135,6 @@ public class Menu {
 							System.out.println("Invalid Option Selected");
 						}
 					} 
-					
 				} while (viewingTicketList);
 				break;
 			case "help":
@@ -172,21 +175,22 @@ public class Menu {
 		return true;
 	}
 	
+	// Display ticket information
 	private void displayTicketInfo() {
 		Iterator<Ticket> iterator = ticketList.iterator();
 		
 		while(iterator.hasNext()) {
 			Ticket ticket = iterator.next();
-			System.out.println(ticket.getId());
-			System.out.println(ticket.getRequesterId());
-			System.out.println(ticket.getSubject());
-			System.out.println(ticket.getCreatedAt());
-			System.out.println(ticket.getPriority());
-			System.out.println(ticket.getStatus());
-			System.out.println(ticket.getType() + "\n");
+			System.out.println(String.format(
+					"ID: %s\nRequester ID: %s\nStatus: %s\nType: %s\n"
+					+ "Priority: %s\nCreated At: %s\nSubject: %s\n", 
+					ticket.getId(), ticket.getRequesterId(), ticket.getStatus(), 
+					ticket.getType(), ticket.getPriority(), ticket.getCreatedAt(), 
+					ticket.getSubject()));
 		}
 	}
 	
+	// Get next page URL for pagination
 	private String getNextURL() {
 		String nextPageURL = null;
 		
@@ -201,6 +205,7 @@ public class Menu {
 		return nextPageURL;
 	}
 	
+	// Get previous page URL for pagination
 	private String getPreviousURL() {
 		String previousPageURL = null;
 		hasPreviousPage = false;
@@ -214,6 +219,7 @@ public class Menu {
 		return previousPageURL;
 	}
 	
+	// Display pagination options to user
 	private void paginationMessage() {
 		if (hasNextPage && hasPreviousPage) {
 			System.out.println("Type:\n"

@@ -17,8 +17,8 @@ import java.util.Base64;
  */
 public class APIConnect {
 
-//	private static String URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/search.json?query=1";
-//	private static String URL_LIST = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
+	private static String URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/search.json?query=";
+	private static String URL_LIST = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
 	private String authorization;
 	private StringBuffer response;
 	
@@ -41,6 +41,7 @@ public class APIConnect {
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setRequestProperty("Accept", "application/json");
 			
+			// Verify connection response code and retrieve data
 			int statusCode = connection.getResponseCode();
 			if (statusCode != HttpURLConnection.HTTP_OK) {
 				System.out.println("Response Code: " + statusCode);
@@ -73,13 +74,15 @@ public class APIConnect {
 		return response;
 	}
 	
+	// Generate URL for single ticket query by ID
 	public String generateURLQueryById(String ticketId) {
-		String url = "https://tyuiop.zendesk.com/api/v2/search.json?query=" + ticketId;
+		String url = URL_SINGLE + ticketId;
 		return url;
 	}
 	
+	// Generate initial URL for viewing ticket list
 	public String generateURLQueryByList() {
-		String url = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
+		String url = URL_LIST;
 		return url;
 	}
 }

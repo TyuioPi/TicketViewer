@@ -7,6 +7,7 @@ import model.Data;
 import model.Ticket;
 import view.Menu;
 
+// The TicketViewerApp class initializes the application
 public class TicketViewerApp {
 
 	private static List<Ticket> ticketList = new ArrayList<Ticket>();
