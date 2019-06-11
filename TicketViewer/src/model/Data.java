@@ -28,19 +28,20 @@ public class Data {
 		}
 		
 		JSONObject = new JSONObject(response.toString());
-		String next_page = JSONObject.get("next_page").toString();
+		String nextPage = JSONObject.get("next_page").toString();
+		String previousPage = JSONObject.get("previous_page").toString();
 		
 		JSONObject = JSONObject.getJSONArray("results").getJSONObject(0);
 		String id = JSONObject.get("id").toString();
 		String requesterId = JSONObject.get("requester_id").toString();
 		String subject = JSONObject.get("subject").toString();
-		String created_at = JSONObject.get("created_at").toString();
+		String createdAt = JSONObject.get("created_at").toString();
 		String priority = JSONObject.get("priority").toString();
 		String status = JSONObject.get("status").toString();
 		String type = JSONObject.get("type").toString();
 		
-		ticketList.add(new Ticket(id, requesterId, subject, created_at, 
-				                  priority, status, type, next_page));
+		ticketList.add(new Ticket(id, requesterId, subject, createdAt, 
+				priority, status, type, nextPage, previousPage));
 		
 		// HANDLE EMPTY JSON
 	}
@@ -55,23 +56,21 @@ public class Data {
 		}
 		
 		JSONObject = new JSONObject(response.toString());
-		String next_page = JSONObject.get("next_page").toString();
-		
+		String nextPage = JSONObject.get("next_page").toString();
+		String previousPage = JSONObject.get("previous_page").toString();
 		JSONArray JSONArray = JSONObject.getJSONArray("tickets");
 		
 		for (int length = 0; length < JSONArray.length(); length++) {
 			String id = JSONArray.getJSONObject(length).get("id").toString();
 			String requesterId = JSONArray.getJSONObject(length).get("requester_id").toString();
 			String subject = JSONArray.getJSONObject(length).get("subject").toString();
-			String created_at = JSONArray.getJSONObject(length).get("created_at").toString();
+			String createdAt = JSONArray.getJSONObject(length).get("created_at").toString();
 			String priority = JSONArray.getJSONObject(length).get("priority").toString();
 			String status = JSONArray.getJSONObject(length).get("status").toString();
 			String type = JSONArray.getJSONObject(length).get("type").toString();
-//			
-			ticketList.add(new Ticket(id, requesterId, subject, created_at, 
-					                  priority, status, type, next_page));
-//			System.out.println(JSONArray.getJSONObject(length).get("id").toString());
+
+			ticketList.add(new Ticket(id, requesterId, subject, createdAt, 
+					priority, status, type, nextPage, previousPage));
 		}
 	}
 }
-//.getJSONObject(0)

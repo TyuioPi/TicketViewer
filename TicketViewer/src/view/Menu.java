@@ -12,13 +12,14 @@ import model.Ticket;
  * Ticket Viewer application
  */
 public class Menu {
-	
 	// Initialize variables to handling menu functionality
 	private Scanner scanner = new Scanner(System.in);
 	private boolean running = true;
 	private APIConnect apiConnect;
 	private Data data;
 	private List<Ticket> ticketList;
+	private boolean hasNextPage = false;
+	private boolean hasPreviousPage = false;
 	
 	public Menu(APIConnect apiConnect, Data data, List<Ticket> ticketList) {
 		this.apiConnect = apiConnect;
@@ -32,7 +33,7 @@ public class Menu {
 		String userInput;
 		
 		System.out.println("Welcome to Ticket Viewer\n" +
-							"Type 'help' to view options\n");
+				"Type 'help' to view options\n");
 		
 		// Switch case statement to handle selected options by user
 		while (running) {
@@ -45,14 +46,14 @@ public class Menu {
 				// View single tickets until user returns to menu
 				while (viewingSingleTicket) {
 					System.out.println("Please enter a ticket ID: \n" + 
-									   "(Type 'return' to go back to menu)");
+							"(Type 'return' to go back to menu)");
 					
 					userInput = scanner.nextLine();
 					
 					// Return to menu
 					if ("return".equals(userInput)) {
+						System.out.println("Returned to menu\n");
 						viewingSingleTicket = false;
-						
 						
 					// Retrieve data from API and display it
 					} else if (validateEnteredTicketId(userInput)) {
@@ -73,34 +74,59 @@ public class Menu {
 				break;
 			case "2":
 				boolean viewingTicketList = true;
-				String nextPageURL = null;
 				boolean viewNextPage = false;
+				boolean viewPreviousPage = false;
+				String nextPageURL = null;
+				String previousPageURL = null;
+				int i = 0;
 				
 				do {
-					StringBuffer response;
+					StringBuffer response = null;
 					
+					if (i == 0) {
+	
+							String url = apiConnect.generateURLQueryByList();
+							response = apiConnect.HttpRequestJSON(url);
+							i++;
+						
+					}
 					// Generate URL for ticket list and get response from URL
 					if (nextPageURL != null && viewNextPage) {
 						response = apiConnect.HttpRequestJSON(nextPageURL);
-					} else {
-						String url = apiConnect.generateURLQueryByList();
-						response = apiConnect.HttpRequestJSON(url);
+					} else if (previousPageURL != null && viewPreviousPage) {
+						response = apiConnect.HttpRequestJSON(previousPageURL);
 					}
 					
 					// Parse response from URL
-					data.parseByPage(response);
+					try {
+						data.parseByPage(response);
+					} catch (NullPointerException e) {
+						System.out.println("A previous or next page does not exist...\n"
+								+ "Returning to menu");
+						e.printStackTrace();
+						break;
+					}
 					
 					// Display ticket
 					displayTicketInfo();
-					nextPageURL = getNextPageURL();
-					viewNextPage = false;
 					
-					while (viewNextPage == false && viewingTicketList) {
+					// Initialize pagination
+					nextPageURL = getNextURL();
+					previousPageURL = getPreviousURL();
+					viewNextPage = false;
+					viewPreviousPage = false;
+					
+					paginationMessage();
+					
+					while (viewNextPage == false && viewPreviousPage == false && viewingTicketList) {
 						userInput = scanner.nextLine();
-						if (userInput.equals("return")){
+						if (userInput.equals("return")) {
+							System.out.println("Returned to menu\n");
 							viewingTicketList = false;
 						} else if (userInput.equals("next")) {
 							viewNextPage = true;
+						} else if (userInput.equals("prev")) {
+							viewPreviousPage = true;
 						} else {
 							System.out.println("Invalid Option Selected");
 						}
@@ -161,21 +187,47 @@ public class Menu {
 		}
 	}
 	
-	private String getNextPageURL() {
+	private String getNextURL() {
 		String nextPageURL = null;
-		boolean hasNextPage = false;
+		
+		hasNextPage = false;
+		
 		if (!ticketList.isEmpty()) {
 			if (!ticketList.get(ticketList.size() - 1).getNextPage().equals("null")) {
 				hasNextPage = true;
 				nextPageURL = ticketList.get(ticketList.size() - 1).getNextPage();
 			}
 		}
-		
-		if (hasNextPage) {
-			System.out.println("Type 'next' to view next page or 'return'"
-					+ " to go back to menu\n");
-		}
-		
 		return nextPageURL;
+	}
+	
+	private String getPreviousURL() {
+		String previousPageURL = null;
+		hasPreviousPage = false;
+		
+		if (!ticketList.isEmpty()) {
+			if (!ticketList.get(ticketList.size() - 1).getPreviousPage().equals("null")) {
+				hasPreviousPage = true;
+				previousPageURL = ticketList.get(ticketList.size() - 1).getPreviousPage();
+			}
+		}
+		return previousPageURL;
+	}
+	
+	private void paginationMessage() {
+		if (hasNextPage && hasPreviousPage) {
+			System.out.println("Type:\n"
+					+ "\t'next' to view next page\n"
+					+ "\t'prev' to view previous page or;\n"
+					+ "\t'return' to go back to menu\n");
+		} else if (hasNextPage) {
+			System.out.println("Type:\n"
+					+ "\t'next' to view next page or;\n"
+					+ "\t'return'to go back to menu\n");
+		} else if (hasPreviousPage) {
+			System.out.println("Type:\n"
+					+ "\t'prev' to view next page or;\n"
+					+ "\t'return'to go back to menu\n");
+		}
 	}
 }

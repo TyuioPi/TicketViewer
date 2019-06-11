@@ -7,22 +7,25 @@ public class Ticket {
 	private String id;
 	private String requesterId;
 	private String subject;
-	private String created_at;
+	private String createdAt;
 	private String priority;
 	private String status;
 	private String type;
-	private String next_page;
+	private String nextPage;
+	private String previousPage;
 	
-	public Ticket(String id, String requesterId, String subject, String created_at, 
-			String priority, String status, String type, String next_page) {
+	public Ticket(String id, String requesterId, String subject, String createdAt, 
+			String priority, String status, String type, String nextPage,
+			String previousPage) {
 		this.id = id;
 		this.requesterId = requesterId;
 		this.subject = subject;
-		this.created_at = created_at;
+		this.createdAt = createdAt;
 		this.priority = priority;
 		this.status = status;
 		this.type = type;
-		this.next_page = next_page;
+		this.nextPage = nextPage;
+		this.previousPage = previousPage;
 	}
 	
 	// Get ticket id
@@ -42,7 +45,7 @@ public class Ticket {
 	
 	// Get date ticket is created
 	public String getCreatedAt() {
-		return created_at;
+		return createdAt;
 	}
 	
 	// Get priority of a ticket
@@ -62,6 +65,11 @@ public class Ticket {
 	
 	// Get next page URL
 	public String getNextPage() {
-		return next_page;
+		return nextPage;
+	}
+	
+	// Get previous page URL
+	public String getPreviousPage() {
+		return previousPage;
 	}
 }
