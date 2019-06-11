@@ -9,10 +9,12 @@ public class Data {
 	
 	public void setJSONObject(StringBuffer response) {
 		JSONObject = new JSONObject(response.toString());
-		System.out.println(JSONObject);
 	}
 	
-	private void parseJSON() {
+	private void parseByIdQuery() {
+	}
+	
+	private void parseByPage() {
 		
 	}
 }
