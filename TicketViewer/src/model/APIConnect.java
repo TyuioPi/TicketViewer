@@ -17,8 +17,8 @@ import java.util.Base64;
  */
 public class APIConnect {
 
-	private static String URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/search.json?query=";
-	private static String URL_LIST = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
+	private final String URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/search.json?query=";
+	private final String URL_LIST = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
 	private String authorization;
 	private StringBuffer response;
 	

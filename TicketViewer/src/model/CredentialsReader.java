@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 
 public class CredentialsReader {
 	
-	private static String FILE_NAME = "auth.txt";
+	private final String FILE_NAME = "auth.txt";
 	
 	public CredentialsReader() {}
 	
