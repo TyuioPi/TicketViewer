@@ -17,6 +17,7 @@ class APIConnectTest {
 	private final String TEST_URL_SINGLE = "https://tyuiop.zendesk.com/api/v2/search.json?query=";
 	private final String TEST_URL_LIST = "https://tyuiop.zendesk.com/api/v2/tickets.json?per_page=25";
 
+	// Test generated URL match for viewing single tickets
 	@Test
 	void generateURLQueryByIdTest() {
 		String[] testIdQuery = {"1", "2", "3", "aasd", "!"};
@@ -27,14 +28,16 @@ class APIConnectTest {
 		}
 	}
 	
+	// Test generated URL match for viewing ticket list
 	@Test
 	void generateURLQueryByListTest() {
 		String testURL = apiConnect.generateURLQueryByList();
 		assertEquals(TEST_URL_LIST, testURL);
 	}
 	
+	// Test connection and response from API
 	@Test
-	void HTTPConnectionTest() {
+	void HTTPConnectionSingleTicketTest() {
 		
 		String[] idQuery = {"1", "2", "3", "aasd", "!"};
 		
@@ -43,7 +46,12 @@ class APIConnectTest {
 			StringBuffer response = apiConnect.HttpRequestJSON(single);
 			assertNotNull(response);
 		}
-		
 	}
-
+	
+	// Test connection and response from API
+	@Test
+	void HTTPConnectionTicketListTest() {
+		StringBuffer response = apiConnect.HttpRequestJSON(TEST_URL_LIST);
+		assertNotNull(response);
+	}
 }

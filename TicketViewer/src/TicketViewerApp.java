@@ -18,8 +18,5 @@ public class TicketViewerApp {
 		APIConnect apiConnect = new APIConnect(credentialsReader.getAuthorization());
 		Menu menu = new Menu(apiConnect, data, ticketList);
 		menu.menu();
-		
-		
 	}
-
 }

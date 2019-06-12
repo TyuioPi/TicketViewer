@@ -49,8 +49,6 @@ public class Data {
 		
 		ticketList.add(new Ticket(id, requesterId, subject, createdAt, 
 				priority, status, type, nextPage, previousPage));
-		
-		// HANDLE EMPTY JSON
 	}
 	
 	/* Parse JSON Object and create ticket objects 

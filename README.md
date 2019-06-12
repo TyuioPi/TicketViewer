@@ -1,6 +1,8 @@
 # TicketViewer
+The project was to design an application that can connect and retrieve information via  
+the Zendesk API and display them under specified requirements.
 
-## Setup Guide
+## Getting Started
 **Installation**  
 1. Download Eclipse 2019-03 IDE via https://www.eclipse.org/downloads/  
 2. Follow installation setup  
@@ -27,8 +29,11 @@ In Eclipse, right-click TicketViewer --> Properties --> Java build path
 			--> Select Libraries tab --> Add external jars --> Select the JSON package downloaded
 
 ## User Manual  
-**Run Application**  
+**Running the Application**  
 1. In Eclipse, expand TicketViewer --> src --> default package --> Select TicketViewerApp --> Run
+
+**Running the Tests**
+1. In Eclipse, expand TicketViewer --> src --> test --> Select class to test --> Run
 
 **Operating Application**  
 Via Main Menu:  
@@ -48,4 +53,9 @@ Via Main Menu:
 **Design Assumptions**  
 In this project, we assume that the ticket id entered are to be of natural numbers in our application for  
 handling single ticket viewing via use of the API for querying tickets with an id
+
+**Design Improvements**
+* The menu method in the Menu class could have been further broken down into multiple smaller methods for readability
+* The attributes nextPage and previousPage in the Ticket class could have been extracted and stored possibly in  
+the Menu class as tickets do not necessarily have a next page or previous page in this particular case   
 

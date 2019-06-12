@@ -8,8 +8,8 @@ import model.APIConnect;
 import model.Data;
 import model.Ticket;
 
-/*The Menu class is designed to handle the UI for users using the
- * Ticket Viewer application
+/*The Menu class is designed to handle the logic and UI for users 
+ * using the Ticket Viewer application
  */
 public class Menu {
 	
@@ -33,8 +33,8 @@ public class Menu {
 		// Initialize string variable for user input
 		String userInput;
 		
-		System.out.println("Welcome to Ticket Viewer\n" +
-				"Type 'help' to view options\n");
+		// Display welcome message
+		welcomeMessage();
 		
 		// Switch case statement to handle selected options by user
 		while (running) {
@@ -246,5 +246,11 @@ public class Menu {
 					+ "\t'prev' to view next page or;\n"
 					+ "\t'return'to go back to menu\n");
 		}
+	}
+	
+	// Display welcome message to user
+	private void welcomeMessage() {
+		System.out.println("Welcome to Ticket Viewer\n" +
+				"Type 'help' to view options\n");
 	}
 }
