@@ -36,7 +36,7 @@ In Eclipse, right-click TicketViewer --> Properties --> Java build path --> Sele
 Via Main Menu:  
 * Type '1' to view a single ticket  
 	- The user will then be asked to either  
-	1. Enter a ticket id will display the ticket corresponding to the id or;  
+	1. Enter a ticket id which will display the ticket corresponding to the id or;  
 	2. Enter 'return' will take the user back to the main menu  
 * Type '2' to view the ticket list  
 	- The user will then be automatically be shown up to the first 25 tickets available and be asked to either  
