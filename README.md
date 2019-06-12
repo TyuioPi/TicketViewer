@@ -1,6 +1,5 @@
 # TicketViewer
-The project was to design an application that can connect and retrieve information via  
-the Zendesk API and display them under specified requirements.
+The project was to design an application that can connect and retrieve information via the Zendesk API and display them under specified requirements.
 
 ## Getting Started
 **Installation**  
@@ -21,12 +20,10 @@ Put the auth.txt file provided into the TicketViewer directory 'TicketViewer/Tic
 (It should reside where the folders 'bin' and 'src' exist)  
 
 **Other Packages**  
-In the case TicketViewer has issues with JSON objects please download the
-following JSON package via https://mvnrepository.com/artifact/org.json/json/20180813    
+In the case TicketViewer has issues with JSON objects please download the following JSON package via https://mvnrepository.com/artifact/org.json/json/20180813    
 
 To install it to our project:  
-In Eclipse, right-click TicketViewer --> Properties --> Java build path
-			--> Select Libraries tab --> Add external jars --> Select the JSON package downloaded
+In Eclipse, right-click TicketViewer --> Properties --> Java build path --> Select Libraries tab --> Add external jars --> Select the JSON package downloaded
 
 ## User Manual  
 **Running the Application**  
@@ -51,11 +48,9 @@ Via Main Menu:
 
 ## Miscellaneous  
 **Design Assumptions**  
-In this project, we assume that the ticket id entered are to be of natural numbers in our application for  
-handling single ticket viewing via use of the API for querying tickets with an id
+In this project, we assume that the ticket id entered are to be of natural numbers in our application for handling single ticket viewing via use of the API for querying tickets with an id
 
 **Design Improvements**
 * The menu method in the Menu class could have been further broken down into multiple smaller methods for readability
-* The attributes nextPage and previousPage in the Ticket class could have been extracted and stored possibly in  
-the Menu class as tickets do not necessarily have a next page or previous page in this particular case   
+* The attributes nextPage and previousPage in the Ticket class could have been extracted and stored possibly in the Menu class as tickets do not necessarily have a next page or previous page in this particular case   
 
