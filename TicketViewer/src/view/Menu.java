@@ -47,13 +47,14 @@ public class Menu {
 				// View single tickets until user returns to menu
 				while (viewingSingleTicket) {
 					System.out.println("Please enter a ticket ID: \n" + 
-							"(Type 'return' to go back to menu)");
+							"(Type 'return' to go back to menu)\n");
 					
 					userInput = scanner.nextLine();
 					
 					// Return to menu
 					if ("return".equals(userInput)) {
-						System.out.println("Returned to menu\n");
+						System.out.println("Returned to menu\n"
+								+ "Type 'help' to view options\n");
 						viewingSingleTicket = false;
 						
 					// Retrieve data from API and display it
@@ -66,7 +67,15 @@ public class Menu {
 						StringBuffer response = apiConnect.HttpRequestJSON(url);
 						
 						// Parse response from URL
-						data.parseDataByIdQuery(response);
+						try {
+							data.parseDataByIdQuery(response);
+						} catch (NullPointerException e) {
+							System.out.println("No data available from provided URL\n"
+									+ "Returning to menu\n"
+									+ "Type 'help' to view options\n");
+							e.printStackTrace();
+							break;
+						}
 						
 						// Display ticket
 						displayTicketInfo();
@@ -103,8 +112,9 @@ public class Menu {
 					try {
 						data.parseByPage(response);
 					} catch (NullPointerException e) {
-						System.out.println("A previous or next page does not exist...\n"
-								+ "Returning to menu");
+						System.out.println("Page does not exist...\n"
+								+ "Returning to menu\n"
+								+ "Type 'help' to view options\n");
 						e.printStackTrace();
 						break;
 					}
@@ -125,7 +135,8 @@ public class Menu {
 					while (viewNextPage == false && viewPreviousPage == false && viewingTicketList) {
 						userInput = scanner.nextLine();
 						if (userInput.equals("return")) {
-							System.out.println("Returned to menu\n");
+							System.out.println("Returned to menu\n"
+									+ "Type 'help' to view options\n");
 							viewingTicketList = false;
 						} else if (userInput.equals("next")) {
 							viewNextPage = true;

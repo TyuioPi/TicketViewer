@@ -42,5 +42,10 @@ Via Main Menu:
 	2. Enter 'prev' (if available) to view the previous page of tickets or;  
 	3. Enter 'return' to return to the main menu
 * Type 'quit' to exit TicketViewer  
-* Type 'help' to view options available in main menu
+* Type 'help' to view options available in main menu  
+
+## Miscellaneous  
+**Design Assumptions**  
+In this project, we assume that the ticket id entered are to be of natural numbers in our application for  
+handling single ticket viewing via use of the API for querying tickets with an id
 
