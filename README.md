@@ -3,8 +3,9 @@
 ## Setup Guide
 **Installation**  
 1. Download Eclipse 2019-03 IDE via https://www.eclipse.org/downloads/  
-2. Follow installation setup    
-**Import Project**  
+2. Follow installation setup  
+
+	**Import Project**  
 3. Open Eclipse IDE  
 4. File --> Import --> Git --> Projects from Git --> Clone URI  
 5. In URI enter: "https://<span></span>github.com/TyuioPi/TicketViewer.git"  
@@ -22,7 +23,7 @@ In the case TicketViewer has issues with JSON objects please download the
 following JSON package via https://mvnrepository.com/artifact/org.json/json/20180813    
 
 To install it to our project:  
-In Eclipse, right-click TicketViewer --> Properties --> Java build path  
+In Eclipse, right-click TicketViewer --> Properties --> Java build path
 			--> Select Libraries tab --> Add external jars --> Select the JSON package downloaded
 
 ## User Manual  
